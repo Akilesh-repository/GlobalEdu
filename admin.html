@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Study Abroad & Overseas Education Consultancy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    // Maximum font weight limited to 600 (semibold) globally
+                    fontWeight: {
+                        medium: '500',
+                        semibold: '600'
+                    },
+                    colors: {
+                        accent: 'var(--accent-color)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* === MINIMAL CORE STYLES & VARIABLES === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100dvh;
+            background-color: var(--dash-bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s;
+        }
+
+        /* Adapted to GlobalEdu Theme */
+        :root {
+            --bg-color: #FAFAFA;
+            --dash-bg: #F0F9FF;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --accent-color: #0EA5E9;
+            --accent-dark: #0284C7;
+            --border-color: #E2E8F0;
+            --sidebar-bg: #FFFFFF;
+            --sidebar-text: #0F172A;
+            --sidebar-muted: #64748B;
+            --sidebar-hover: rgba(14, 165, 233, 0.08);
+            --sidebar-active: rgba(14, 165, 233, 0.12);
+            --sidebar-border: #E2E8F0;
+            --sidebar-width: 260px;
+            --card-bg: #FFFFFF;
+            --radius: 16px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --btn-shadow: 0 4px 14px 0 rgba(14, 165, 233, 0.2);
+        }
+
+        body.dark-mode {
+            --bg-color: #0F172A;
+            --dash-bg: #0F172A;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border-color: #1E293B;
+            --card-bg: #111827;
+            --accent-color: #38BDF8;
+            --accent-dark: #0EA5E9;
+            --sidebar-bg: #111827;
+            --sidebar-text: #F8FAFC;
+            --sidebar-muted: #94A3B8;
+            --sidebar-hover: rgba(56, 189, 248, 0.1);
+            --sidebar-active: rgba(56, 189, 248, 0.15);
+            --sidebar-border: #1E293B;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        /* RTL & UTILITIES */
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .ml-auto {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        .dash-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* LAYOUT */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--sidebar-border);
+            height: 100dvh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 24px 16px;
+            transition: all 0.3s;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            color: var(--sidebar-text);
+        }
+
+        [dir="rtl"] .sidebar {
+            left: auto;
+            right: 0;
+            border-right: none;
+            border-left: 1px solid var(--sidebar-border);
+        }
+
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            transition: margin 0.3s;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        [dir="rtl"] .main-wrapper {
+            margin-left: 0;
+            margin-right: var(--sidebar-width);
+        }
+
+        .topbar {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            background: var(--dash-bg);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+
+        .content-area {
+            padding: 0 32px 32px 32px;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            [dir="rtl"] .sidebar {
+                transform: translateX(100%);
+            }
+
+            [dir="rtl"] .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-wrapper {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                width: 100%;
+            }
+
+            .topbar {
+                padding: 0 20px;
+            }
+
+            .content-area {
+                padding: 0 20px 20px 20px;
+            }
+
+            .hamburger-btn {
+                display: block !important;
+            }
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 45;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .hamburger-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* NAV ITEMS */
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: var(--sidebar-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            width: 24px;
+            font-size: 1rem;
+            text-align: center;
+            margin-right: 12px;
+        }
+
+        [dir="rtl"] .nav-item i {
+            margin-right: 0;
+            margin-left: 12px;
+        }
+
+        .nav-item:hover {
+            color: var(--accent-color);
+            background: var(--sidebar-hover);
+        }
+
+        .nav-item.active {
+            background: var(--sidebar-active);
+            color: var(--accent-color);
+        }
+
+        /* ICONS & BUTTONS */
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: var(--accent-color);
+            color: #FFF;
+            border-color: var(--accent-color);
+        }
+
+        .btn-action {
+            background: var(--accent-color);
+            color: #FFF;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            border: none;
+            box-shadow: var(--btn-shadow);
+            transition: transform 0.2s;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            background: var(--accent-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-color);
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            border: 2px solid var(--accent-color);
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-color);
+            color: #FFF;
+        }
+
+        /* TABLES & TABS */
+        .clean-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        [dir="rtl"] .clean-table {
+            text-align: right;
+        }
+
+        .clean-table th {
+            padding: 12px 16px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .clean-table td {
+            padding: 16px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .badge-info {
+            background: rgba(14, 165, 233, 0.1);
+            color: #0EA5E9;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .tab-section {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .tab-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="overflow-x-hidden">
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <!-- 100% Identical Logo from Front-End Pages Constraints -->
+        <div class="mb-10 px-4 bg-transparent py-2">
+            <div class="flex items-center flex-shrink-0">
+                <a href="index.html" class="inline-flex items-center gap-3 text-2xl font-semibold tracking-widest uppercase"
+                    style="color: var(--text-main) !important; text-decoration: none;">
+                    <i class="fas fa-globe-americas" style="color: var(--accent-color); font-size: 1.4rem;"></i>
+                    GlobalEdu
+                </a>
+            </div>
+        </div>
+
+        <nav class="flex-grow">
+            <p class="text-[10px] font-semibold uppercase tracking-widest mb-3 px-4 text-[var(--text-muted)]">Operations
+            </p>
+            <a class="nav-item active tab-btn" data-target="a-dash"><i class="fas fa-chart-pie"></i> Dashboard</a>
+            <a class="nav-item tab-btn" data-target="a-apps"><i class="fas fa-file-signature"></i> Applications</a>
+            <a class="nav-item tab-btn" data-target="a-univs"><i class="fas fa-university"></i> Universities</a>
+            <a class="nav-item tab-btn" data-target="a-students"><i class="fas fa-user-graduate"></i> Students</a>
+
+            <p class="text-[10px] font-semibold uppercase tracking-widest mt-8 mb-3 px-4 text-[var(--text-muted)]">
+                System
+            </p>
+            <a class="nav-item tab-btn" data-target="a-settings"><i class="fas fa-cog"></i> Settings</a>
+            <a href="login.html" class="nav-item mt-6 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"><i
+                    class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="topbar">
+            <div class="flex items-center gap-4">
+                <button class="hamburger-btn" id="sidebar-toggle"><i class="fas fa-bars"></i></button>
+                <div
+                    class="hidden md:flex items-center bg-[var(--card-bg)] border border-[var(--border-color)] rounded-full px-4 py-2 w-64">
+                    <i class="fas fa-search text-[var(--text-muted)] mr-2 text-sm"></i>
+                    <input type="text" placeholder="Search students, universities, or apps..."
+                        class="bg-transparent border-none outline-none w-full text-sm text-[var(--text-main)]">
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="icon-btn hidden sm:flex" id="rtl-toggle"><i class="fas fa-align-right"></i></button>
+                <button class="icon-btn" id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <div
+                    class="w-8 h-8 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center font-semibold text-sm ml-2">
+                    AD</div>
+            </div>
+        </header>
+
+        <main class="content-area mt-6">
+
+            <!-- Dashboard Tab -->
+            <div id="a-dash" class="tab-section active">
+                <h2 class="text-2xl font-semibold text-[var(--text-main)] mb-6">Consultancy Overview</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                    <div class="dash-card p-5 border-t-4 border-[var(--accent-color)]">
+                        <p class="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-1">
+                            Active Applications</p>
+                        <h3 class="text-2xl font-semibold text-[var(--text-main)]">1,452</h3>
+                    </div>
+                    <div class="dash-card p-5 border-t-4 border-emerald-500">
+                        <p class="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-1">
+                            Monthly Revenue</p>
+                        <h3 class="text-2xl font-semibold text-[var(--text-main)]">$142.8K</h3>
+                    </div>
+                    <div class="dash-card p-5 border-t-4 border-purple-500">
+                        <p class="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-1">
+                            Total Students Enrolled</p>
+                        <h3 class="text-2xl font-semibold text-[var(--text-main)]">12,045</h3>
+                    </div>
+                    <div class="dash-card p-5 border-t-4 border-amber-500 cursor-pointer tab-btn"
+                        data-target="a-apps">
+                        <p class="text-[10px] font-semibold uppercase tracking-widest text-amber-500 mb-1">Pending Reviews
+                        </p>
+                        <h3 class="text-2xl font-semibold text-amber-600">84 Action Req.</h3>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="dash-card p-6 overflow-x-auto lg:col-span-2">
+                        <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+                            <h3 class="font-semibold text-[var(--text-main)]">Recent Applications</h3>
+                            <button class="btn-outline tab-btn" data-target="a-apps">View All</button>
+                        </div>
+                        <table class="clean-table">
+                            <thead>
+                                <tr>
+                                    <th>App ID</th>
+                                    <th>Student</th>
+                                    <th>Target Univ.</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="font-semibold">#APP-8924</span></td>
+                                    <td>Priya Sharma</td>
+                                    <td>Columbia Univ.</td>
+                                    <td><span class="status-badge badge-warning">SOP Review</span></td>
+                                    <td><button class="btn-action">Manage</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="font-semibold">#APP-8891</span></td>
+                                    <td>Marcus Cole</td>
+                                    <td>Univ. of Toronto</td>
+                                    <td><span class="status-badge badge-info">Submitted</span></td>
+                                    <td><button class="btn-outline text-xs !py-1">Details</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="dash-card p-6 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-semibold text-[var(--text-main)] mb-4">Quick Actions</h3>
+                            <button
+                                class="w-full text-left p-3 mb-2 rounded bg-[var(--dash-bg)] border border-[var(--border-color)] hover:border-[var(--accent-color)] text-sm font-semibold transition-colors"><i
+                                    class="fas fa-user-plus text-[var(--accent-color)] mr-2"></i> Register New Student</button>
+                            <button
+                                class="w-full text-left p-3 mb-2 rounded bg-[var(--dash-bg)] border border-[var(--border-color)] hover:border-[var(--accent-color)] text-sm font-semibold transition-colors"><i
+                                    class="fas fa-university text-[var(--accent-color)] mr-2"></i> Add University Partner</button>
+                            <button
+                                class="w-full text-left p-3 rounded bg-[var(--dash-bg)] border border-[var(--border-color)] hover:border-[var(--accent-color)] text-sm font-semibold transition-colors"><i
+                                    class="fas fa-envelope text-[var(--accent-color)] mr-2"></i> Send Deadline Reminders</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications Tab -->
+            <div id="a-apps" class="tab-section">
+                <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+                    <h2 class="text-2xl font-semibold text-[var(--text-main)]">Student Applications</h2>
+                    <button class="btn-action"><i class="fas fa-plus mr-1"></i> Create Application</button>
+                </div>
+                <div class="dash-card p-6 overflow-x-auto w-full">
+                    <table class="clean-table min-w-[700px]">
+                        <thead>
+                            <tr>
+                                <th>App ID</th>
+                                <th>Student Info</th>
+                                <th>Target University</th>
+                                <th>Intake Term</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="font-semibold">#APP-8924</span><br><span
+                                        class="text-xs text-[var(--text-muted)]">Oct 12</span></td>
+                                <td><span class="text-sm font-semibold">Priya Sharma</span><br><span
+                                        class="text-xs text-[var(--text-muted)]">priya@email.com</span></td>
+                                <td>Columbia University<br><span class="text-xs text-[var(--text-muted)]">MS Comp Sci</span></td>
+                                <td>Fall 2026</td>
+                                <td><span class="status-badge badge-warning">SOP Review</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">#APP-8891</span><br><span
+                                        class="text-xs text-[var(--text-muted)]">Oct 05</span></td>
+                                <td><span class="text-sm font-semibold">Marcus Cole</span><br><span
+                                        class="text-xs text-[var(--text-muted)]">marcus@email.com</span></td>
+                                <td>Univ. of Toronto<br><span class="text-xs text-[var(--text-muted)]">MEng Data Sci</span></td>
+                                <td>Fall 2026</td>
+                                <td><span class="status-badge badge-info">Submitted</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">#APP-8105</span><br><span
+                                        class="text-xs text-[var(--text-muted)]">Sep 15</span></td>
+                                <td><span class="text-sm font-semibold">Liam Wilson</span><br><span
+                                        class="text-xs text-[var(--text-muted)]">liam@email.com</span></td>
+                                <td>Imperial College<br><span class="text-xs text-[var(--text-muted)]">MSc Finance</span></td>
+                                <td>Spring 2026</td>
+                                <td><span class="status-badge badge-danger">Docs Pending</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Universities Tab -->
+            <div id="a-univs" class="tab-section">
+                <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+                    <h2 class="text-2xl font-semibold text-[var(--text-main)]">Partner Universities</h2>
+                    <button class="btn-action"><i class="fas fa-folder-plus mr-1"></i> Add Partner</button>
+                </div>
+                <div class="dash-card p-6 overflow-x-auto w-full">
+                    <table class="clean-table min-w-[600px]">
+                        <thead>
+                            <tr>
+                                <th>University Name</th>
+                                <th>Country</th>
+                                <th>Tie-up Type</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="font-semibold">New York University (NYU)</span></td>
+                                <td><span class="text-sm text-[var(--text-muted)]">United States</span></td>
+                                <td><span class="font-semibold text-sm text-[var(--text-main)]">Direct Partner</span></td>
+                                <td><span class="status-badge badge-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">University of Toronto</span></td>
+                                <td><span class="text-sm text-[var(--text-muted)]">Canada</span></td>
+                                <td><span class="font-semibold text-sm text-[var(--text-main)]">Direct Partner</span></td>
+                                <td><span class="status-badge badge-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">University of Melbourne</span></td>
+                                <td><span class="text-sm text-[var(--text-muted)]">Australia</span></td>
+                                <td><span class="font-semibold text-sm text-[var(--text-main)]">Indirect / Agency</span></td>
+                                <td><span class="status-badge badge-warning">Review Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-semibold">TUM Munich</span></td>
+                                <td><span class="text-sm text-[var(--text-muted)]">Germany</span></td>
+                                <td><span class="font-semibold text-sm text-[var(--text-main)]">Direct Partner</span></td>
+                                <td><span class="status-badge badge-danger">Contract Expired</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Members Tab -->
+            <div id="a-students" class="tab-section">
+                <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+                    <h2 class="text-2xl font-semibold text-[var(--text-main)]">Student Directory</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="dash-card p-6 text-center flex flex-col items-center">
+                        <div
+                            class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-xl font-semibold mb-4">
+                            PS</div>
+                        <h3 class="font-semibold text-[var(--text-main)]">Priya Sharma</h3>
+                        <p class="text-xs text-[var(--text-muted)] mb-4">Target: USA</p>
+                        <div class="w-full flex justify-between border-t border-[var(--border-color)] pt-4 mt-auto">
+                            <div class="text-left">
+                                <p class="text-[10px] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+                                    Active Apps</p>
+                                <p class="font-semibold">3</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[10px] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+                                    Plan
+                                </p>
+                                <p class="font-semibold text-[var(--accent-color)]">Elite Ivy</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dash-card p-6 text-center flex flex-col items-center">
+                        <div
+                            class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-xl font-semibold mb-4">
+                            MC</div>
+                        <h3 class="font-semibold text-[var(--text-main)]">Marcus Cole</h3>
+                        <p class="text-xs text-[var(--text-muted)] mb-4">Target: Canada</p>
+                        <div class="w-full flex justify-between border-t border-[var(--border-color)] pt-4 mt-auto">
+                            <div class="text-left">
+                                <p class="text-[10px] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+                                    Active Apps</p>
+                                <p class="font-semibold">2</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[10px] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+                                    Plan
+                                </p>
+                                <p class="font-semibold text-[var(--accent-color)]">Premium</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dash-card p-6 text-center flex flex-col items-center">
+                        <div
+                            class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-xl font-semibold mb-4">
+                            LW</div>
+                        <h3 class="font-semibold text-[var(--text-main)]">Liam Wilson</h3>
+                        <p class="text-xs text-[var(--text-muted)] mb-4">Target: UK</p>
+                        <div class="w-full flex justify-between border-t border-[var(--border-color)] pt-4 mt-auto">
+                            <div class="text-left">
+                                <p class="text-[10px] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+                                    Active Apps</p>
+                                <p class="font-semibold">1</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[10px] text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+                                    Plan
+                                </p>
+                                <p class="font-semibold text-[var(--accent-color)]">Essential</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="a-settings" class="tab-section">
+                <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+                    <h2 class="text-2xl font-semibold text-[var(--text-main)]">System Settings</h2>
+                    <button class="btn-action">Save Changes</button>
+                </div>
+                <div class="dash-card p-6 max-w-2xl">
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <label class="block text-xs font-semibold text-[var(--text-muted)] uppercase mb-2">Portal
+                                Name</label>
+                            <input type="text" value="GlobalEdu Admin Portal"
+                                class="w-full bg-[var(--dash-bg)] border border-[var(--border-color)] rounded-lg px-4 py-2 text-sm text-[var(--text-main)] outline-none focus:border-[var(--accent-color)]">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[var(--text-muted)] uppercase mb-2">Support
+                                Email</label>
+                            <input type="email" value="support@globaledu.com"
+                                class="w-full bg-[var(--dash-bg)] border border-[var(--border-color)] rounded-lg px-4 py-2 text-sm text-[var(--text-main)] outline-none focus:border-[var(--accent-color)]">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-[var(--text-muted)] uppercase mb-2">Head Office
+                                Address</label>
+                            <textarea rows="3"
+                                class="w-full bg-[var(--dash-bg)] border border-[var(--border-color)] rounded-lg px-4 py-2 text-sm text-[var(--text-main)] outline-none focus:border-[var(--accent-color)] resize-none">Suite 450, Global Tech Park, Education District, NY</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Tab Logic
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabSections = document.querySelectorAll('.tab-section');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabSections.forEach(s => s.classList.remove('active'));
+                const targetId = btn.getAttribute('data-target');
+                document.querySelectorAll(`[data-target="${targetId}"]`).forEach(b => b.classList.add('active'));
+                document.getElementById(targetId).classList.add('active');
+                if (window.innerWidth <= 1024) {
+                    document.getElementById('sidebar').classList.remove('active');
+                    document.getElementById('sidebar-overlay').classList.remove('active');
+                }
+            });
+        });
+
+        // Sidebar & Overlay Logic
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        function toggleSidebar() { sidebar.classList.toggle('active'); sidebarOverlay.classList.toggle('active'); }
+        document.getElementById('sidebar-toggle').addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        // Theme & RTL Logic
+        function applyTheme(isDark) {
+            document.body.classList.toggle('dark-mode', isDark);
+            document.getElementById('theme-toggle').querySelector('i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        applyTheme((localStorage.getItem('theme') || 'light') === 'dark');
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            const isDark = !document.body.classList.contains('dark-mode');
+            applyTheme(isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('dir') === 'rtl') document.documentElement.dir = 'rtl';
+        document.getElementById('rtl-toggle').addEventListener('click', () => {
+            const isRTL = document.documentElement.dir === 'rtl';
+            document.documentElement.dir = isRTL ? 'ltr' : 'rtl';
+            localStorage.setItem('dir', isRTL ? 'ltr' : 'rtl');
+        });
+    </script>
+</body>
+
+</html>
