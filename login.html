@@ -36,15 +36,24 @@
             box-sizing: border-box;
         }
 
-        /* STRICT NO SCROLL LOCK FROM TEMPLATE */
+        /* VIEWPORT & SCROLL HANDLING */
         html,
         body {
-            height: 100vh !important;
-            width: 100vw !important;
-            overflow: hidden !important;
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
+        }
+
+        /* STRICT NO SCROLL LOCK ON LARGE DESKTOP SCREENS */
+        @media (min-width: 1025px) and (min-height: 720px) {
+            html,
+            body {
+                height: 100vh;
+                overflow: hidden;
+            }
         }
 
         /* === GLOBLEDU THEME VARIABLES === */
@@ -110,7 +119,7 @@
 
         /* IMMERSIVE BACKGROUND */
         .page-background {
-            position: absolute;
+            position: fixed;
             inset: 0;
             z-index: 0;
             width: 100%;
@@ -120,7 +129,7 @@
         }
 
         .page-overlay {
-            position: absolute;
+            position: fixed;
             inset: 0;
             z-index: 1;
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(2, 132, 199, 0.6));
@@ -167,6 +176,10 @@
             transform: rotate(180deg);
         }
 
+        [dir="rtl"] .auth-btn .fa-arrow-right {
+            transform: rotate(180deg);
+        }
+
         /* =========================================
            TOP CONTROLS BAR
            ========================================= */
@@ -181,6 +194,7 @@
             flex-shrink: 0;
             position: absolute;
             top: 0;
+            left: 0;
             right: 0;
         }
 
@@ -246,7 +260,8 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 2rem;
+            min-height: 100vh;
+            padding: 5rem 2rem 2rem;
             z-index: 10;
         }
 
@@ -504,6 +519,8 @@
             justify-content: space-between;
             margin: 6px 0 0 0;
             padding: 0 4px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .custom-checkbox {
@@ -617,10 +634,12 @@
             display: flex;
             justify-content: space-between;
             gap: 12px;
+            width: 100%;
         }
 
         .social-btn {
             flex: 1;
+            min-width: 0;
             height: 44px;
             border: 1.5px solid var(--input-border);
             border-radius: 50px; /* Unique aesthetic change */
@@ -686,28 +705,168 @@
             transform-origin: left;
         }
 
-        /* RESPONSIVENESS PRESERVED FROM TEMPLATE */
-        @media (max-width: 768px),
-        (max-height: 650px) {
+        /* =========================================
+           RESPONSIVE BREAKPOINTS (TABLET & MOBILE)
+           ========================================= */
+
+        /* TABLET RESPONSIVE (768px - 1024px) */
+        @media (min-width: 768px) and (max-width: 1024px) {
             .main-wrapper {
-                padding: 1rem;
+                padding: 4.5rem 1.5rem 2rem;
+            }
+
+            .top-bar {
+                padding: 1rem 1.5rem;
             }
 
             .login-container {
-                max-width: 420px;
+                max-width: 720px;
                 border-radius: 20px;
             }
 
+            .image-panel {
+                width: 48%;
+                display: block;
+            }
+
+            .image-panel-overlay {
+                padding: 2.25rem 1.5rem;
+            }
+
+            .image-panel-overlay h3 {
+                font-size: 1.5rem;
+                line-height: 1.25;
+                margin-bottom: 0.5rem;
+            }
+
+            .image-panel-overlay p {
+                font-size: 0.825rem;
+                line-height: 1.5;
+            }
+
             .form-panel {
-                padding: 2rem;
+                width: 52%;
+                padding: 2rem 1.75rem;
+            }
+
+            .auth-logo {
+                margin-bottom: 0.875rem;
+            }
+
+            .auth-header {
+                margin-bottom: 1.25rem;
+            }
+
+            .auth-header h2 {
+                font-size: 1.5rem;
+                margin-bottom: 4px;
+            }
+
+            .auth-header p {
+                font-size: 0.825rem;
+                display: block !important;
             }
 
             form {
                 gap: 12px !important;
             }
 
+            .form-group {
+                gap: 6px;
+            }
+
+            .form-group label {
+                font-size: 0.72rem;
+            }
+
+            .input-field {
+                height: 42px !important;
+                font-size: 0.85rem !important;
+            }
+
+            .utility-row {
+                margin-top: 4px;
+            }
+
+            .utility-row span,
+            .utility-row a {
+                font-size: 0.72rem !important;
+            }
+
+            .auth-btn {
+                height: 44px !important;
+                font-size: 0.875rem;
+                margin-top: 6px;
+            }
+
+            .divider {
+                margin: 12px 0;
+            }
+
+            .social-login {
+                gap: 10px;
+            }
+
+            .social-btn {
+                height: 40px !important;
+                font-size: 0.95rem !important;
+            }
+
+            .login-link {
+                margin-top: 1.25rem;
+                font-size: 0.825rem;
+            }
+        }
+
+        /* MOBILE RESPONSIVE (< 768px) */
+        @media (max-width: 767.98px) {
+            .main-wrapper {
+                padding: 4.25rem 1rem 1.5rem;
+            }
+
+            .top-bar {
+                padding: 0.875rem 1rem;
+            }
+
+            .top-btn-text {
+                font-size: 0.65rem;
+                padding: 5px 10px;
+            }
+
+            .login-container {
+                max-width: 440px;
+                border-radius: 20px;
+            }
+
+            .image-panel {
+                display: none !important;
+            }
+
+            .form-panel {
+                width: 100% !important;
+                padding: 1.75rem 1.25rem;
+            }
+
+            .auth-logo {
+                margin-bottom: 0.75rem;
+            }
+
+            .auth-header {
+                margin-bottom: 1.25rem;
+            }
+
+            .auth-header h2 {
+                font-size: 1.4rem;
+                margin-bottom: 4px;
+            }
+
             .auth-header p {
-                display: none;
+                font-size: 0.8rem;
+                display: block !important;
+            }
+
+            form {
+                gap: 12px !important;
             }
 
             .input-field {
@@ -717,6 +876,11 @@
 
             .auth-btn {
                 height: 44px !important;
+                font-size: 0.875rem;
+            }
+
+            .social-login {
+                gap: 10px;
             }
 
             .social-btn {
@@ -724,12 +888,73 @@
                 font-size: 0.9rem !important;
             }
 
-            .utility-row span {
+            .utility-row span,
+            .utility-row a {
                 font-size: 0.7rem !important;
             }
 
-            .utility-row a {
-                font-size: 0.7rem !important;
+            .login-link {
+                margin-top: 1.25rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* SHORT SCREENS (LANDSCAPE / SHORT VIEWPORTS) */
+        @media (max-height: 680px) {
+            .main-wrapper {
+                padding-top: 4.25rem;
+                padding-bottom: 1.5rem;
+            }
+
+            .auth-logo {
+                margin-bottom: 0.5rem;
+            }
+
+            .auth-header {
+                margin-bottom: 0.875rem;
+            }
+
+            .auth-header h2 {
+                font-size: 1.35rem;
+            }
+
+            form {
+                gap: 10px !important;
+            }
+
+            .input-field {
+                height: 40px !important;
+            }
+
+            .auth-btn {
+                height: 42px !important;
+                margin-top: 4px;
+            }
+
+            .divider {
+                margin: 10px 0;
+            }
+
+            .social-btn {
+                height: 38px !important;
+            }
+
+            .login-link {
+                margin-top: 1rem;
+            }
+
+            .image-panel-overlay {
+                padding: 1.5rem;
+            }
+
+            .image-panel-overlay h3 {
+                font-size: 1.35rem;
+                margin-bottom: 0.35rem;
+            }
+
+            .image-panel-overlay p {
+                font-size: 0.8rem;
+                line-height: 1.4;
             }
         }
     </style>
@@ -738,7 +963,7 @@
 <body>
 
     <!-- IMMERSIVE BACKGROUND -->
-    <img src="images\pexels-sofatutor-95841679-9240632.jpg" class="page-background" alt="University Campus">
+    <img src="images/pexels-sofatutor-95841679-9240632.jpg" class="page-background" alt="University Campus">
     <div class="page-overlay"></div>
 
     <!-- TOP BAR -->
@@ -759,7 +984,7 @@
             <!-- Image Panel (Hidden on Mobile) -->
             <div class="image-panel">
                 <!-- Overseas Education Themed Image -->
-                <img src="images\pexels-tima-miroshnichenko-5303546.jpg" alt="Global Students">
+                <img src="images/pexels-tima-miroshnichenko-5303546.jpg" alt="Global Students">
                 <div class="image-panel-overlay">
                     <h3>Your Global Journey.</h3>
                     <p>Log in to track your university applications, visa status, and communicate directly with your dedicated counselor.</p>
