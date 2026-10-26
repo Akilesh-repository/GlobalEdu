@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Abroad & Overseas Education Consultancy</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -184,16 +185,17 @@
 
         /* PILL TOGGLE */
         .theme-toggle-pill {
-            width: 52px; height: 28px; background: var(--bg-secondary); border-radius: 30px;
+            width: 58px; height: 36px; background: var(--bg-secondary); border-radius: 9999px;
             position: relative; cursor: pointer; display: flex; align-items: center;
-            justify-content: space-between; padding: 0 6px; border: 1px solid var(--border-color);
+            justify-content: space-between; padding: 0 7px; border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
         }
         body.dark-mode .theme-toggle-pill { border-color: var(--border-color); }
-        .theme-toggle-pill i { font-size: 10px; z-index: 1; }
+        .theme-toggle-pill i { font-size: 11px; z-index: 1; }
         .theme-toggle-pill .fa-sun { color: #f59e0b; }
         .theme-toggle-pill .fa-moon { color: #999; }
         .theme-toggle-pill .thumb {
-            position: absolute; top: 1px; left: 2px; width: 24px; height: 24px;
+            position: absolute; top: 3px; left: 3px; width: 28px; height: 28px;
             background: white; border-radius: 50%; transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); z-index: 2; border: 1px solid var(--border-color);
         }
@@ -203,13 +205,18 @@
 
         /* RTL BUTTON STYLE */
         .rtl-btn-style {
-            width: 44px; height: 28px; background: var(--bg-secondary); border-radius: 4px;
+            min-width: 48px; height: 36px; padding: 0 12px; background: var(--bg-secondary); border-radius: 9999px;
             border: 1px solid var(--border-color); display: flex; align-items: center;
-            justify-content: center; font-size: 10px; font-weight: 600; cursor: pointer;
+            justify-content: center; font-size: 11px; font-weight: 600; cursor: pointer;
             color: var(--text-main); transition: all 0.3s ease;
         }
         body.dark-mode .rtl-btn-style { border-color: var(--border-color); }
         .rtl-btn-style:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+
+        .navbar-cta {
+            height: 36px !important;
+            border-radius: 9999px !important;
+        }
 
         /* BUTTON DESIGN (MODERN SLIDE-FILL) */
         .btn {
@@ -276,6 +283,61 @@
         }
         .social-link-circle:hover { background: var(--accent-color); border-color: var(--accent-color); color: #FFFFFF; transform: translateY(-3px); }
         .footer-bottom { border-top: 1px solid var(--border-color); padding: 32px 0; margin-top: 60px; }
+
+        /* READY TO TAKE FLIGHT (CTA NEWSLETTER) SECTION */
+        .flight-cta-section {
+            background-color: #0F172A !important;
+            position: relative;
+        }
+        body.dark-mode .flight-cta-section {
+            background-color: #0B1120 !important;
+            border-bottom-color: var(--border-color);
+        }
+        .flight-cta-overlay {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.45) 0%, rgba(15, 23, 42, 0.85) 50%, rgba(15, 23, 42, 0.95) 100%);
+        }
+        body.dark-mode .flight-cta-overlay {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.35) 0%, rgba(11, 17, 32, 0.9) 50%, rgba(11, 17, 32, 0.98) 100%);
+        }
+        .flight-cta-heading {
+            color: #FFFFFF !important;
+        }
+        .flight-cta-desc {
+            color: #E2E8F0 !important;
+        }
+        .flight-cta-input {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            color: #FFFFFF !important;
+        }
+        .flight-cta-input::placeholder {
+            color: rgba(226, 232, 240, 0.7) !important;
+        }
+        .flight-cta-input:focus {
+            border-color: var(--accent-color) !important;
+            background: rgba(255, 255, 255, 0.15) !important;
+        }
+        .flight-cta-btn {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            border-color: #FFFFFF !important;
+            font-weight: 600 !important;
+        }
+        .flight-cta-btn:hover {
+            background-color: #F8FAFC !important;
+            color: var(--accent-color) !important;
+            border-color: #F8FAFC !important;
+        }
+        body.dark-mode .flight-cta-btn {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            border-color: #FFFFFF !important;
+        }
+        body.dark-mode .flight-cta-btn:hover {
+            background-color: var(--accent-color) !important;
+            color: #FFFFFF !important;
+            border-color: var(--accent-color) !important;
+        }
     </style>
 </head>
 
@@ -320,13 +382,13 @@
             </div>
 
             <div class="hidden xl:flex items-center gap-3 shrink-0">
-                <a href="login.html" class="btn btn-solid !w-[90px] !h-[36px] !p-0 !text-[11px]">Login</a>
-                <div class="w-px h-6 bg-[var(--border-color)] mx-2"></div>
                 <div id="theme-toggle-desktop" class="theme-toggle-pill" title="Toggle Dark Mode">
                     <i class="fas fa-sun"></i><i class="fas fa-moon"></i>
                     <div class="thumb"></div>
                 </div>
                 <button id="rtl-btn" class="rtl-btn-style" title="Toggle LTR/RTL">LTR</button>
+                <div class="w-px h-6 bg-[var(--border-color)] mx-1"></div>
+                <a href="login.html" class="btn btn-solid navbar-cta !w-[92px] !h-[36px] !p-0 !text-[11px] !rounded-full">Login</a>
             </div>
 
             <div class="xl:hidden flex items-center justify-end gap-4 shrink-0">
@@ -384,7 +446,7 @@
                 </div>
             </div>
             <div class="flex gap-4 w-full">
-                <a href="login.html" class="btn btn-solid flex-1 !py-3">Login</a>
+                <a href="login.html" class="btn btn-solid flex-1 !py-3 !rounded-full">Login</a>
             </div>
         </div>
     </div>
@@ -555,7 +617,7 @@
                         <div class="flex text-yellow-400 text-sm mb-4 gap-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                         <p class="text-[var(--text-main)] font-medium leading-relaxed mb-8">"GlobalEdu made my dream of studying at Columbia a reality. Their SOP editing team is absolutely world-class."</p>
                         <div class="flex items-center gap-4">
-                            <img src="images\pexels-boom-12716037.jpg" class="w-12 h-12 rounded-full object-cover shadow-sm">
+                            <img src="C:/Users/akaki/.gemini/antigravity-ide/brain/249c2c2a-6c81-4c3a-a9e3-5b68c1beed9f/student_priya_face_1793013255122.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&h=300&q=80';" alt="Priya Sharma" class="w-12 h-12 rounded-full object-cover shadow-sm ring-2 ring-[var(--accent-color)]/30">
                             <div>
                                 <h4 class="font-semibold text-[var(--text-main)] text-sm">Priya Sharma</h4>
                                 <p class="text-[var(--text-muted)] text-xs font-semibold uppercase tracking-wider mt-0.5">Columbia University, USA</p>
@@ -567,7 +629,7 @@
                         <div class="flex text-yellow-400 text-sm mb-4 gap-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                         <p class="text-[var(--text-main)] font-medium leading-relaxed mb-8">"I had a previous visa rejection. The counselors here did a mock interview prep that rebuilt my confidence perfectly."</p>
                         <div class="flex items-center gap-4">
-                            <img src="images\pexels-cottonbro-7014772.jpg" class="w-12 h-12 rounded-full object-cover shadow-sm">
+                            <img src="C:/Users/akaki/.gemini/antigravity-ide/brain/249c2c2a-6c81-4c3a-a9e3-5b68c1beed9f/student_rahul_face_1793013288244.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&h=300&q=80';" alt="Rahul Verma" class="w-12 h-12 rounded-full object-cover shadow-sm ring-2 ring-[var(--accent-color)]/30">
                             <div>
                                 <h4 class="font-semibold text-[var(--text-main)] text-sm">Rahul Verma</h4>
                                 <p class="text-[var(--text-muted)] text-xs font-semibold uppercase tracking-wider mt-0.5">Univ of Toronto, Canada</p>
@@ -579,7 +641,7 @@
                         <div class="flex text-yellow-400 text-sm mb-4 gap-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                         <p class="text-[var(--text-main)] font-medium leading-relaxed mb-8">"From IELTS prep to finding off-campus housing in London, they handled every single detail with immense professionalism."</p>
                         <div class="flex items-center gap-4">
-                            <img src="images\pexels-cottonbro-7014775.jpg" class="w-12 h-12 rounded-full object-cover shadow-sm">
+                            <img src="C:/Users/akaki/.gemini/antigravity-ide/brain/249c2c2a-6c81-4c3a-a9e3-5b68c1beed9f/student_aisha_face_1793013318498.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&h=300&q=80';" alt="Aisha Khan" class="w-12 h-12 rounded-full object-cover shadow-sm ring-2 ring-[var(--accent-color)]/30">
                             <div>
                                 <h4 class="font-semibold text-[var(--text-main)] text-sm">Aisha Khan</h4>
                                 <p class="text-[var(--text-muted)] text-xs font-semibold uppercase tracking-wider mt-0.5">Imperial College, UK</p>
@@ -622,20 +684,20 @@
         </section>
 
         <!-- SECTION 6: CTA / Newsletter (~45 lines) -->
-        <section class="relative w-full py-28 flex items-center justify-center overflow-hidden border-b border-[var(--border-color)] bg-[var(--text-main)]">
+        <section class="flight-cta-section relative w-full py-28 flex items-center justify-center overflow-hidden border-b border-[var(--border-color)] bg-[#0F172A]">
             <div class="absolute inset-0 z-0">
                 <img src="images\pexels-gustavo-fring-3874375.jpg" class="w-full h-full object-cover opacity-20 mix-blend-overlay">
-                <div class="absolute inset-0 bg-gradient-to-r from-[var(--accent-dark)]/80 to-[var(--text-main)]/90"></div>
+                <div class="flight-cta-overlay absolute inset-0 bg-gradient-to-r from-[#0369A1]/60 via-[#0F172A]/85 to-[#0F172A]/95"></div>
             </div>
             <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
-                <div class="w-16 h-16 mx-auto bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md mb-6 border border-white/20">
-                    <i class="fas fa-paper-plane text-2xl text-white"></i>
+                <div class="w-16 h-16 mx-auto bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md mb-6 border border-white/20 shadow-inner">
+                    <i class="fas fa-paper-plane text-2xl text-[var(--accent-color)]"></i>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-6">Ready to Take Flight?</h2>
-                <p class="text-gray-300 text-lg font-medium mb-10 max-w-2xl mx-auto">Subscribe to our admissions newsletter for scholarship alerts, application deadline reminders, and expert tips sent directly to your inbox.</p>
+                <h2 class="flight-cta-heading text-4xl md:text-5xl font-semibold text-white tracking-tight mb-6">Ready to Take Flight?</h2>
+                <p class="flight-cta-desc text-slate-200 text-lg font-medium mb-10 max-w-2xl mx-auto">Subscribe to our admissions newsletter for scholarship alerts, application deadline reminders, and expert tips sent directly to your inbox.</p>
                 <form class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto w-full">
-                    <input type="email" placeholder="Enter your email address" class="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/50 rounded-md px-6 py-4 focus:outline-none focus:border-white transition-colors backdrop-blur-sm font-medium">
-                    <button type="button" class="btn btn-solid !bg-white !text-[var(--text-main)] hover:!bg-gray-100 !border-white !py-4 !px-8 text-sm shrink-0">Subscribe Now</button>
+                    <input type="email" placeholder="Enter your email address" class="flight-cta-input flex-1 bg-white/10 border border-white/25 text-white placeholder-slate-300 rounded-md px-6 py-4 focus:outline-none focus:border-[var(--accent-color)] transition-colors backdrop-blur-sm font-medium">
+                    <button type="button" class="flight-cta-btn btn btn-solid !bg-white !text-[#0F172A] hover:!bg-gray-100 !border-white !py-4 !px-8 text-sm shrink-0">Subscribe Now</button>
                 </form>
             </div>
         </section>

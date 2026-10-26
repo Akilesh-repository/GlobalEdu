@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Study Abroad & Overseas Education Consultancy</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -48,6 +49,7 @@
         :root {
             --bg-color: #FAFAFA;
             --dash-bg: #F0F9FF;
+            --bg-secondary: #F0F9FF;
             --text-main: #0F172A;
             --text-muted: #64748B;
             --accent-color: #0EA5E9;
@@ -69,6 +71,7 @@
         body.dark-mode {
             --bg-color: #0F172A;
             --dash-bg: #0F172A;
+            --bg-secondary: #1E293B;
             --text-main: #F8FAFC;
             --text-muted: #94A3B8;
             --border-color: #1E293B;
@@ -275,6 +278,36 @@
             border-color: var(--accent-color);
         }
 
+        /* PILL TOGGLE */
+        .theme-toggle-pill {
+            width: 58px; height: 36px; background: var(--bg-secondary); border-radius: 9999px;
+            position: relative; cursor: pointer; display: flex; align-items: center;
+            justify-content: space-between; padding: 0 7px; border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        body.dark-mode .theme-toggle-pill { border-color: var(--border-color); }
+        .theme-toggle-pill i { font-size: 11px; z-index: 1; }
+        .theme-toggle-pill .fa-sun { color: #f59e0b; }
+        .theme-toggle-pill .fa-moon { color: #999; }
+        .theme-toggle-pill .thumb {
+            position: absolute; top: 3px; left: 3px; width: 28px; height: 28px;
+            background: white; border-radius: 50%; transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); z-index: 2; border: 1px solid var(--border-color);
+        }
+        body.dark-mode .theme-toggle-pill .thumb {
+            transform: translateX(22px); background: #333; border-color: var(--border-color);
+        }
+
+        /* RTL BUTTON STYLE */
+        .rtl-btn-style {
+            min-width: 48px; height: 36px; padding: 0 12px; background: var(--bg-secondary); border-radius: 9999px;
+            border: 1px solid var(--border-color); display: flex; align-items: center;
+            justify-content: center; font-size: 11px; font-weight: 600; cursor: pointer;
+            color: var(--text-main); transition: all 0.3s ease;
+        }
+        body.dark-mode .rtl-btn-style { border-color: var(--border-color); }
+        .rtl-btn-style:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+
         .btn-action {
             background: var(--accent-color);
             color: #FFF;
@@ -440,8 +473,11 @@
                 </div>
             </div>
             <div class="flex items-center gap-3">
-                <button class="icon-btn hidden sm:flex" id="rtl-toggle"><i class="fas fa-align-right"></i></button>
-                <button class="icon-btn" id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <div id="theme-toggle-desktop" class="theme-toggle-pill" title="Toggle Dark Mode">
+                    <i class="fas fa-sun"></i><i class="fas fa-moon"></i>
+                    <div class="thumb"></div>
+                </div>
+                <button id="rtl-btn" class="rtl-btn-style hidden sm:flex" title="Toggle LTR/RTL">LTR</button>
                 <div
                     class="w-8 h-8 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center font-semibold text-sm ml-2">
                     AD</div>
@@ -755,23 +791,40 @@
         sidebarOverlay.addEventListener('click', toggleSidebar);
 
         // Theme & RTL Logic
+        const themeBtn = document.getElementById('theme-toggle-desktop') || document.getElementById('theme-toggle');
+        const rtlBtn = document.getElementById('rtl-btn') || document.getElementById('rtl-toggle');
+
         function applyTheme(isDark) {
             document.body.classList.toggle('dark-mode', isDark);
-            document.getElementById('theme-toggle').querySelector('i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
         applyTheme((localStorage.getItem('theme') || 'light') === 'dark');
-        document.getElementById('theme-toggle').addEventListener('click', () => {
-            const isDark = !document.body.classList.contains('dark-mode');
-            applyTheme(isDark);
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
 
-        if (localStorage.getItem('dir') === 'rtl') document.documentElement.dir = 'rtl';
-        document.getElementById('rtl-toggle').addEventListener('click', () => {
-            const isRTL = document.documentElement.dir === 'rtl';
-            document.documentElement.dir = isRTL ? 'ltr' : 'rtl';
-            localStorage.setItem('dir', isRTL ? 'ltr' : 'rtl');
-        });
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const isDark = !document.body.classList.contains('dark-mode');
+                applyTheme(isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        }
+
+        function updateRTLUI(currentDir) {
+            const isRTL = currentDir === 'rtl';
+            if (rtlBtn) rtlBtn.innerText = isRTL ? 'RTL' : 'LTR';
+        }
+
+        const initialDir = localStorage.getItem('dir') || 'ltr';
+        if (initialDir === 'rtl') document.documentElement.dir = 'rtl';
+        updateRTLUI(initialDir);
+
+        if (rtlBtn) {
+            rtlBtn.addEventListener('click', () => {
+                const isRTL = document.documentElement.dir === 'rtl';
+                const newDir = isRTL ? 'ltr' : 'rtl';
+                document.documentElement.dir = newDir;
+                localStorage.setItem('dir', newDir);
+                updateRTLUI(newDir);
+            });
+        }
     </script>
 </body>
 

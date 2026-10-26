@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="aishaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="50%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#064E3B"/>
+    </linearGradient>
+
+    <!-- Skin Gradient -->
+    <linearGradient id="aishaSkin" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#CE946B"/>
+      <stop offset="100%" stop-color="#B67B51"/>
+    </linearGradient>
+
+    <!-- Hair Gradient -->
+    <linearGradient id="aishaHair" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#241B18"/>
+      <stop offset="100%" stop-color="#120D0C"/>
+    </linearGradient>
+
+    <!-- Blazer Gradient -->
+    <linearGradient id="aishaBlazer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="120" height="120" rx="60" fill="url(#aishaBg)"/>
+
+  <!-- Back Curly Hair Volume -->
+  <ellipse cx="60" cy="56" rx="36" ry="36" fill="url(#aishaHair)"/>
+  <circle cx="27" cy="56" r="14" fill="url(#aishaHair)"/>
+  <circle cx="93" cy="56" r="14" fill="url(#aishaHair)"/>
+  <circle cx="28" cy="74" r="12" fill="url(#aishaHair)"/>
+  <circle cx="92" cy="74" r="12" fill="url(#aishaHair)"/>
+  <circle cx="34" cy="90" r="10" fill="url(#aishaHair)"/>
+  <circle cx="86" cy="90" r="10" fill="url(#aishaHair)"/>
+
+  <!-- Body / Blazer Shoulders -->
+  <path d="M 22 120 C 22 95 38 87 60 87 C 82 87 98 95 98 120 Z" fill="url(#aishaBlazer)"/>
+
+  <!-- Inner Top (Terracotta Rust) -->
+  <polygon points="60,116 48,88 72,88" fill="#C2410C"/>
+
+  <!-- Lapels of Blazer -->
+  <polygon points="46,87 60,108 52,120 38,120 38,92" fill="#1E40AF"/>
+  <polygon points="74,87 60,108 68,120 82,120 82,92" fill="#1E3A8A"/>
+
+  <!-- Gold Pendant -->
+  <path d="M 52 90 Q 60 99 68 90" fill="none" stroke="#F59E0B" stroke-width="1.4"/>
+  <circle cx="60" cy="98" r="1.8" fill="#F59E0B"/>
+
+  <!-- Neck -->
+  <path d="M 52 69 L 52 89 Q 60 93 68 89 L 68 69 Z" fill="#A86E45"/>
+  <ellipse cx="60" cy="87" rx="8" ry="3" fill="#945B33" opacity="0.4"/>
+
+  <!-- Face -->
+  <ellipse cx="60" cy="57" rx="22" ry="25" fill="url(#aishaSkin)"/>
+
+  <!-- Soft Cheek Glow -->
+  <circle cx="46" cy="63" r="5" fill="#F43F5E" opacity="0.18"/>
+  <circle cx="74" cy="63" r="5" fill="#F43F5E" opacity="0.18"/>
+
+  <!-- Eyebrows -->
+  <path d="M 43 45 Q 49 42 55 44" fill="none" stroke="#1A120F" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M 65 44 Q 71 42 77 45" fill="none" stroke="#1A120F" stroke-width="2.2" stroke-linecap="round"/>
+
+  <!-- Eyes -->
+  <ellipse cx="49" cy="52" rx="3.5" ry="3.5" fill="#17100D"/>
+  <ellipse cx="71" cy="52" rx="3.5" ry="3.5" fill="#17100D"/>
+  <circle cx="50" cy="50.8" r="1.2" fill="#FFFFFF"/>
+  <circle cx="72" cy="50.8" r="1.2" fill="#FFFFFF"/>
+
+  <!-- Nose -->
+  <path d="M 60 50 L 60 61 Q 62 63 64 62" fill="none" stroke="#945B33" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Radiant Smile -->
+  <path d="M 50 68 Q 60 78 70 68" fill="#991B1B"/>
+  <path d="M 52 68 Q 60 73 68 68" fill="#FFFFFF"/>
+  <path d="M 49 68 Q 60 79 71 68" fill="none" stroke="#7F1D1D" stroke-width="1.2" stroke-linecap="round"/>
+
+  <!-- Front Hair Waves / Curls -->
+  <path d="M 38 46 C 38 31 49 28 60 28 C 73 28 83 32 83 46 C 83 43 72 34 60 34 C 47 34 38 43 38 46 Z" fill="url(#aishaHair)"/>
+  <path d="M 38 44 Q 45 56 40 70 Q 35 56 38 44 Z" fill="url(#aishaHair)"/>
+  <path d="M 82 44 Q 75 56 80 70 Q 85 56 82 44 Z" fill="url(#aishaHair)"/>
+
+  <!-- Delicate Pearl Earrings -->
+  <circle cx="37.5" cy="62" r="2.2" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="0.8"/>
+  <circle cx="82.5" cy="62" r="2.2" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="0.8"/>
+</svg>

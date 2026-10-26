@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Create Account | Study Abroad & Overseas Education Consultancy</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -765,6 +766,19 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="confirm-password" class="input-field password-field" placeholder="••••••••"
+                            required>
+                        <i class="fas fa-lock input-icon"></i>
+                        <button type="button" class="password-toggle" id="toggle-confirm-password" tabindex="-1"
+                            aria-label="Toggle confirm password visibility">
+                            <i class="fas fa-eye" id="toggle-confirm-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
                 <!-- BUTTON & UTILITY PLACEMENT PRESERVED -->
                 <div class="utility-row">
                     <label class="custom-checkbox">
@@ -845,9 +859,25 @@
             toggleIcon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
         });
 
+        const toggleConfirmPasswordBtn = document.getElementById('toggle-confirm-password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const toggleConfirmIcon = document.getElementById('toggle-confirm-icon');
+
+        if (toggleConfirmPasswordBtn && confirmPasswordInput) {
+            toggleConfirmPasswordBtn.addEventListener('click', () => {
+                const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPasswordInput.setAttribute('type', type);
+                toggleConfirmIcon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+            });
+        }
+
         // --- FORM SUBMISSION ---
         document.getElementById('register-form').addEventListener('submit', (e) => {
             e.preventDefault();
+            if (passwordInput && confirmPasswordInput && passwordInput.value !== confirmPasswordInput.value) {
+                alert('Passwords do not match. Please verify and try again.');
+                return;
+            }
             // Redirecting to login upon successful registration
             window.location.href = 'login.html';
         });

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="rahulBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="60%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+
+    <!-- Skin Gradient -->
+    <linearGradient id="rahulSkin" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C68B59"/>
+      <stop offset="100%" stop-color="#B07442"/>
+    </linearGradient>
+
+    <!-- Hair Gradient -->
+    <linearGradient id="rahulHair" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#231B18"/>
+      <stop offset="100%" stop-color="#0F0B0A"/>
+    </linearGradient>
+
+    <!-- Hoodie Gradient -->
+    <linearGradient id="rahulHoodie" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="120" height="120" rx="60" fill="url(#rahulBg)"/>
+
+  <!-- Body / Hoodie Shoulders -->
+  <path d="M 20 120 C 20 94 36 86 60 86 C 84 86 100 94 100 120 Z" fill="url(#rahulHoodie)"/>
+
+  <!-- Hoodie Drawstrings & Inner Collar -->
+  <path d="M 46 88 Q 60 98 74 88" fill="none" stroke="#0F172A" stroke-width="3"/>
+  <line x1="53" y1="94" x2="52" y2="106" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="67" y1="94" x2="68" y2="106" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Toronto University Emblem Accent -->
+  <circle cx="38" cy="106" r="5" fill="#1E3A8A" stroke="#FFFFFF" stroke-width="1"/>
+  <path d="M 36 106 L 40 106 M 38 104 L 38 108" stroke="#FBBF24" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Neck -->
+  <path d="M 50 68 L 50 90 Q 60 94 70 90 L 70 68 Z" fill="#9D6436"/>
+
+  <!-- Face -->
+  <ellipse cx="60" cy="57" rx="22" ry="25" fill="url(#rahulSkin)"/>
+
+  <!-- Beard / Stubble Layer -->
+  <path d="M 40 56 C 40 76 48 83 60 83 C 72 83 80 76 80 56 C 80 62 76 80 60 80 C 44 80 40 62 40 56 Z" fill="#1C1411" opacity="0.35"/>
+  <path d="M 52 74 Q 60 77 68 74" fill="none" stroke="#1C1411" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
+
+  <!-- Eyebrows -->
+  <path d="M 43 45 Q 49 42 55 44" fill="none" stroke="#18110E" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M 65 44 Q 71 42 77 45" fill="none" stroke="#18110E" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Eyes behind glasses -->
+  <ellipse cx="49" cy="51.5" rx="3" ry="3" fill="#1C130E"/>
+  <ellipse cx="71" cy="51.5" rx="3" ry="3" fill="#1C130E"/>
+  <circle cx="50" cy="50.3" r="1" fill="#FFFFFF"/>
+  <circle cx="72" cy="50.3" r="1" fill="#FFFFFF"/>
+
+  <!-- Stylish Glasses -->
+  <!-- Left frame -->
+  <rect x="42" y="46" width="14" height="11" rx="3" fill="rgba(255,255,255,0.12)" stroke="#0F172A" stroke-width="2"/>
+  <!-- Right frame -->
+  <rect x="64" y="46" width="14" height="11" rx="3" fill="rgba(255,255,255,0.12)" stroke="#0F172A" stroke-width="2"/>
+  <!-- Bridge -->
+  <line x1="56" y1="49" x2="64" y2="49" stroke="#0F172A" stroke-width="2"/>
+  <!-- Temples -->
+  <line x1="42" y1="49" x2="38" y2="48" stroke="#0F172A" stroke-width="2"/>
+  <line x1="78" y1="49" x2="82" y2="48" stroke="#0F172A" stroke-width="2"/>
+  <!-- Glass Glare Highlight -->
+  <line x1="44" y1="48" x2="48" y2="48" stroke="#FFFFFF" stroke-width="1.2" opacity="0.75" stroke-linecap="round"/>
+  <line x1="66" y1="48" x2="70" y2="48" stroke="#FFFFFF" stroke-width="1.2" opacity="0.75" stroke-linecap="round"/>
+
+  <!-- Nose -->
+  <path d="M 60 50 L 60 61 Q 62 63 64 62" fill="none" stroke="#90562C" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Smile -->
+  <path d="M 51 68 Q 60 76 69 68" fill="#881337"/>
+  <path d="M 53 68 Q 60 72 67 68" fill="#FFFFFF"/>
+  <path d="M 50 68 Q 60 77 70 68" fill="none" stroke="#700B2B" stroke-width="1.2" stroke-linecap="round"/>
+
+  <!-- Hair Cut & Styling -->
+  <path d="M 37 46 C 36 30 46 25 60 25 C 74 25 84 30 83 46 C 81 44 79 33 60 33 C 41 33 39 44 37 46 Z" fill="url(#rahulHair)"/>
+  <path d="M 44 28 Q 58 22 76 30 Q 64 26 44 28 Z" fill="#382C27" opacity="0.5"/>
+  <!-- Sideburns -->
+  <path d="M 38 46 L 38 56 L 41 55 L 41 46 Z" fill="url(#rahulHair)"/>
+  <path d="M 82 46 L 82 56 L 79 55 L 79 46 Z" fill="url(#rahulHair)"/>
+</svg>
